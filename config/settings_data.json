@@ -119,7 +119,7 @@
     "predictive_search_show_price": false,
     "currency_code_enabled": true,
     "cart_type": "drawer",
-    "show_vendor": true,
+    "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "magische-uhren",
     "sections": {
