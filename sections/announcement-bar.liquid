@@ -83,7 +83,7 @@
                   {%- if block.settings.iconstack_position == 'left' -%}
                     {% include 'custom-announcement-iconstack' %}
                   {%- elsif block.settings.timer_1 -%}
-          {% include 'custom-announcement-timer', text: block.settings.text_1 %}
+                    {% include 'dion-announcement-timer', text: block.settings.text_1 %}
                   {%- else -%}
                     <p class="announcement-bar__message h5{% if block.settings.align_absolute_1 %} align_absolute{% endif %}{% if block.settings.show_mobile_1 %} announcement-col--hidden{% endif %}">
                       {%- if block.settings.icon_1 != blank -%}
@@ -106,7 +106,7 @@
                   {%- if block.settings.iconstack_position == 'left-mid' -%}
                     {% include 'custom-announcement-iconstack' %}
                   {%- elsif block.settings.timer_2 -%}
-          {% include 'custom-announcement-timer', text: block.settings.text_2 %}
+                    {% include 'dion-announcement-timer', text: block.settings.text_2 %}
                   {%- else -%}
                     <p class="announcement-bar__message h5{% if block.settings.align_absolute_2 %} align_absolute{% endif %}{% if block.settings.show_mobile_2 %} announcement-col--hidden{% endif %}">
                       {%- if block.settings.icon_2 != blank -%}
@@ -129,7 +129,7 @@
                   {%- if block.settings.iconstack_position == 'right-mid' -%}
                     {% include 'custom-announcement-iconstack' %}
                   {%- elsif block.settings.timer_3 -%}
-          {% include 'custom-announcement-timer', text: block.settings.text_3 %}
+                    {% include 'dion-announcement-timer', text: block.settings.text_3 %}
                   {%- else -%}
                     <p class="announcement-bar__message h5{% if block.settings.align_absolute_3 %} align_absolute{% endif %}{% if block.settings.show_mobile_3 %} announcement-col--hidden{% endif %}">
                       {%- if block.settings.icon_3 != blank -%}
@@ -152,7 +152,7 @@
                   {%- if block.settings.iconstack_position == 'right' -%}
                     {% include 'custom-announcement-iconstack' %}
                   {%- elsif block.settings.timer_4 -%}
-          {% include 'custom-announcement-timer', text: block.settings.text_4 %}
+                    {% include 'dion-announcement-timer', text: block.settings.text_4 %}
                   {%- else -%}
                     <p class="announcement-bar__message h5{% if block.settings.align_absolute_4 %} align_absolute{% endif %}{% if block.settings.show_mobile_4 %} announcement-col--hidden{% endif %}">
                       {%- if block.settings.icon_4 != blank -%}
