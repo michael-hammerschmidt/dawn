@@ -129,13 +129,13 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text_1": "20% Rabatt beim Kauf von 2 Uhren (wird automatisch an der Kasse berechnet) \/\/ Kostenloser & schneller Versand mit",
+              "text_1": "20% Rabatt beim Kauf von 2 Uhren (wird automatisch an der Kasse berechnet)",
               "img_size_1": 20,
               "link_1": "",
               "show_mobile_1": false,
               "align_absolute_1": false,
               "timer_1": false,
-              "text_2": "",
+              "text_2": "Kostenloser & schneller Versand mit DHL",
               "img_size_2": 20,
               "link_2": "",
               "show_mobile_2": false,
