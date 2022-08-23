@@ -1,61 +1,472 @@
+{%- style -%}
+  .announcement-bar, .announcement-bar__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-around;
+  }
+  .announcement-bar__message {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  font-size: {{ section.settings.text_font_size }}rem;
+  }
+  .announcement_img--icon {
+    margin-right: 5px;
+  }
+  .link-col--text {
+    text-decoration: none;
+  }
+  .removeable_cross {
+    position: absolute;
+    display: flex;
+    right: 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+  z-index: 1;
+  }
+
+  @media only screen and (min-width: 750px) {
+    .align_absolute {
+      position: absolute;
+    }
+  .align_absolute .align_absolute {
+      position: relative;
+    }
+  }
+
+  @media only screen and (max-width: 749px) {
+    .announcement-col--hidden {
+      display: none !important;
+    }
+    .announcement-bar__message {
+      font-size: {{ section.settings.text_font_size_mobile }}rem;
+    }
+  }
+
+  {%- if section.settings.no_border -%}
+    .announcement-bar {
+      border: unset;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
 {%- for block in section.blocks -%}
   {%- case block.type -%}
     {%- when 'announcement' -%}
-      <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
-        {%- if block.settings.text != blank -%}
+    {%- style -%}
+    {%- if block.settings.bg_color_override != blank -%}
+          .announcement-bar.custom-{{ forloop.index }} {
+            background: {{ block.settings.bg_color_override }};
+      padding: {{ block.settings.desktop_padding }}px;
+          }
+    {%- endif -%}
+    {%- if block.settings.mobile_padding > 0 -%}
+          @media only screen and (max-width: 749px) {
+            .announcement-bar.custom-{{ forloop.index }} {
+              padding: {{ block.settings.mobile_padding }}px;
+            }
+          }
+    {%- endif -%}
+    {%- endstyle -%}
+      <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient custom-{{ forloop.index }}" data-barindex="announcement-index-{{ forloop.index }}" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.text_1 != blank or block.settings.text_2 != blank or block.settings.text_3 != blank or block.settings.text_4 != blank -%}
           {%- if block.settings.link != blank -%}
             <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
           {%- endif -%}
-              <div class="page-width">
-                <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
-                  {{ block.settings.text | escape }}
-                  {%- if block.settings.link != blank -%}
-                    {% render 'icon-arrow' %}
+              {%- if block.settings.text_1 != blank or block.settings.icon_1 != blank or block.settings.timer_1 -%}
+                {%- if block.settings.link_1 != blank -%}
+                  <a href="{{ block.settings.link_1 }}" class="link-col--text{% if block.settings.align_absolute_1 %} align_absolute{% endif %}{% if block.settings.show_mobile_1 %} announcement-col--hidden{% endif %}">
+                {%- endif -%}
+                  {%- if block.settings.iconstack_position == 'left' -%}
+                    {% include 'custom-announcement-iconstack' %}
+                  {%- elsif block.settings.timer_1 -%}
+          {% include 'custom-announcement-timer', text: block.settings.text_1 %}
+                  {%- else -%}
+                    <p class="announcement-bar__message h5{% if block.settings.align_absolute_1 %} align_absolute{% endif %}{% if block.settings.show_mobile_1 %} announcement-col--hidden{% endif %}">
+                      {%- if block.settings.icon_1 != blank -%}
+                        {%- assign image_size = block.settings.img_size_1 | append: 'x' -%}
+                        <img class="announcement_img--icon" src="{{ block.settings.icon_1 | img_url: image_size }}">
+                      {%- endif -%}
+                      {%- if block.settings.text_1 != blank -%}
+                        {{ block.settings.text_1 }}
+                      {%- endif -%}
+                    </p>
                   {%- endif -%}
-                </p>
-              </div>
+                {%- if block.settings.link_1 != blank -%}
+                  </a>
+                {%- endif -%}
+              {%- endif -%}
+              {%- if block.settings.text_2 != blank or block.settings.icon_2 != blank or block.settings.timer_2 -%}
+                {%- if block.settings.link_2 != blank -%}
+                  <a href="{{ block.settings.link_2 }}" class="link-col--text{% if block.settings.align_absolute_2 %} align_absolute{% endif %}{% if block.settings.show_mobile_2 %} announcement-col--hidden{% endif %}">
+                {%- endif -%}
+                  {%- if block.settings.iconstack_position == 'left-mid' -%}
+                    {% include 'custom-announcement-iconstack' %}
+                  {%- elsif block.settings.timer_2 -%}
+          {% include 'custom-announcement-timer', text: block.settings.text_2 %}
+                  {%- else -%}
+                    <p class="announcement-bar__message h5{% if block.settings.align_absolute_2 %} align_absolute{% endif %}{% if block.settings.show_mobile_2 %} announcement-col--hidden{% endif %}">
+                      {%- if block.settings.icon_2 != blank -%}
+                        {%- assign image_size = block.settings.img_size_2 | append: 'x' -%}
+                        <img class="announcement_img--icon" src="{{ block.settings.icon_2 | img_url: image_size }}">
+                      {%- endif -%}
+                      {%- if block.settings.text_2 != blank -%}
+                        {{ block.settings.text_2 }}
+                      {%- endif -%}
+                    </p>
+                  {%- endif -%}
+                {%- if block.settings.link_2 != blank -%}
+                  </a>
+                {%- endif -%}
+              {%- endif -%}
+              {%- if block.settings.text_3 != blank or block.settings.icon_3 != blank or block.settings.timer_3 -%}
+                {%- if block.settings.link_3 != blank -%}
+                  <a href="{{ block.settings.link_3 }}" class="link-col--text{% if block.settings.align_absolute_3 %} align_absolute{% endif %}{% if block.settings.show_mobile_3 %} announcement-col--hidden{% endif %}">
+                {%- endif -%}
+                  {%- if block.settings.iconstack_position == 'right-mid' -%}
+                    {% include 'custom-announcement-iconstack' %}
+                  {%- elsif block.settings.timer_3 -%}
+          {% include 'custom-announcement-timer', text: block.settings.text_3 %}
+                  {%- else -%}
+                    <p class="announcement-bar__message h5{% if block.settings.align_absolute_3 %} align_absolute{% endif %}{% if block.settings.show_mobile_3 %} announcement-col--hidden{% endif %}">
+                      {%- if block.settings.icon_3 != blank -%}
+                        {%- assign image_size = block.settings.img_size_3 | append: 'x' -%}
+                        <img class="announcement_img--icon" src="{{ block.settings.icon_3 | img_url: image_size }}">
+                      {%- endif -%}
+                      {%- if block.settings.text_3 != blank -%}
+                        {{ block.settings.text_3 }}
+                      {%- endif -%}
+                    </p>
+                  {%- endif -%}
+                {%- if block.settings.link_3 != blank -%}
+                  </a>
+                {%- endif -%}
+              {%- endif -%}
+              {%- if block.settings.text_4 != blank or block.settings.icon_4 != blank or block.settings.timer_4 -%}
+                {%- if block.settings.link_4 != blank -%}
+                  <a href="{{ block.settings.link_4 }}" class="link-col--text{% if block.settings.align_absolute_4 %} align_absolute{% endif %}{% if block.settings.show_mobile_4 %} announcement-col--hidden{% endif %}">
+                {%- endif -%}
+                  {%- if block.settings.iconstack_position == 'right' -%}
+                    {% include 'custom-announcement-iconstack' %}
+                  {%- elsif block.settings.timer_4 -%}
+          {% include 'custom-announcement-timer', text: block.settings.text_4 %}
+                  {%- else -%}
+                    <p class="announcement-bar__message h5{% if block.settings.align_absolute_4 %} align_absolute{% endif %}{% if block.settings.show_mobile_4 %} announcement-col--hidden{% endif %}">
+                      {%- if block.settings.icon_4 != blank -%}
+                        {%- assign image_size = block.settings.img_size_4 | append: 'x' -%}
+                        <img class="announcement_img--icon" src="{{ block.settings.icon_4 | img_url: image_size }}">
+                      {%- endif -%}
+                      {%- if block.settings.text_4 != blank -%}
+                        {{ block.settings.text_4 }}
+                      {%- endif -%}
+                    </p>
+                  {%- endif -%}
+                {%- if block.settings.link_4 != blank -%}
+                  </a>
+                {%- endif -%}
+              {%- endif -%}
           {%- if block.settings.link != blank -%}
             </a>
+          {%- endif -%}
+          {%- if block.settings.removeable_cross -%}
+          {%- style -%}
+              .removeable_cross svg {
+                width: {{ block.settings.removeable_cross_size }}px;
+                color: {{ block.settings.removeable_cross_hex }};
+              }
+            {%- endstyle -%}
+          <span class="removeable_cross cross-ico--{{ block.settings.removeable_cross }}">{% render 'icon-close' %}</span>
           {%- endif -%}
         {%- endif -%}
       </div>
   {%- endcase -%}
 {%- endfor -%}
 
+<script>
+  var removeable_cross = document.querySelectorAll('.removeable_cross');
+
+  for(var i = 0; i < removeable_cross.length; i++) {
+    var anchor = removeable_cross[i];
+  var nIndex = anchor.parentElement.dataset.barindex;
+    var cState = getCookie(nIndex);
+    
+    if (cState == 'closed') {
+      anchor.parentElement.remove();
+    } else {
+      anchor.onclick = function() {
+        if (cState == '' || cState == null) {
+          setCookie(this.parentElement.dataset.barindex, 'closed', 1);
+        }
+
+        this.parentElement.remove();
+      }
+    }
+  }
+
+  function setCookie(cname,cvalue,exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+</script>
+
 {% schema %}
 {
   "name": "t:sections.announcement-bar.name",
-  "max_blocks": 12,
+  "max_blocks": 24,
+  "settings": [
+    {
+      "type": "range",
+      "id": "text_font_size",
+    "min": 1,
+      "max": 3,
+      "step": 0.1,
+    "unit": "rem",
+      "label": "Font Size [desktop]",
+      "default": 1.2
+    },
+  {
+      "type": "range",
+      "id": "text_font_size_mobile",
+    "min": 1,
+      "max": 3,
+      "step": 0.1,
+    "unit": "rem",
+      "label": "Font Size [mobile]",
+      "default": 1.1
+    },
+  {
+      "type": "checkbox",
+      "id": "no_border",
+      "default": false,
+      "label": "Remove Border"
+    }
+  ],
   "blocks": [
     {
       "type": "announcement",
       "name": "t:sections.announcement-bar.blocks.announcement.name",
       "settings": [
         {
+          "type": "header",
+          "content": "1. Spalte"
+        },
+    {
           "type": "text",
-          "id": "text",
+          "id": "text_1",
           "default": "Welcome to our store",
           "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
         },
         {
-          "type": "select",
-          "id": "text_alignment",
-          "options": [
-            {
-              "value": "left",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__1.label"
-            },
-            {
-              "value": "center",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__2.label"
-            },
-            {
-              "value": "right",
-              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__3.label"
-            }
-          ],
-          "default": "center",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.label"
+          "type": "image_picker",
+          "id": "icon_1",
+          "label": "Icon"
+        },
+        {
+          "type": "range",
+          "id": "img_size_1",
+          "min": 16,
+          "max": 100,
+          "step": 2,
+          "default": 20,
+          "unit": "px",
+          "label": "Size"
+        },
+        {
+          "type": "url",
+          "id": "link_1",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mobile_1",
+          "default": false,
+          "label": "Hide Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "align_absolute_1",
+          "default": false,
+          "label": "Align Absolute",
+      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+        },
+        {
+          "type": "checkbox",
+          "id": "timer_1",
+          "default": false,
+          "label": "24 Stunden Timer",
+      "info": "Achtung! Nur 1x pro Leiste auswählen."
+        },
+        {
+          "type": "header",
+          "content": "2. Spalte"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_2",
+          "label": "Icon"
+        },
+        {
+          "type": "range",
+          "id": "img_size_2",
+          "min": 16,
+          "max": 100,
+          "step": 2,
+          "default": 20,
+          "unit": "px",
+          "label": "Size"
+        },
+        {
+          "type": "url",
+          "id": "link_2",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mobile_2",
+          "default": false,
+          "label": "Hide Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "align_absolute_2",
+          "default": false,
+          "label": "Align Absolute",
+      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+        },
+        {
+          "type": "checkbox",
+          "id": "timer_2",
+          "default": false,
+          "label": "24 Stunden Timer",
+      "info": "Achtung! Nur 1x pro Leiste auswählen."
+        },
+        {
+          "type": "header",
+          "content": "3. Spalte"
+        },
+        {
+          "type": "text",
+          "id": "text_3",
+          "label": "Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_3",
+          "label": "Icon"
+        },
+        {
+          "type": "range",
+          "id": "img_size_3",
+          "min": 16,
+          "max": 100,
+          "step": 2,
+          "default": 20,
+          "unit": "px",
+          "label": "Size"
+        },
+        {
+          "type": "url",
+          "id": "link_3",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mobile_3",
+          "default": false,
+          "label": "Hide Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "align_absolute_3",
+          "default": false,
+          "label": "Align Absolute",
+      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+        },
+        {
+          "type": "checkbox",
+          "id": "timer_3",
+          "default": false,
+          "label": "24 Stunden Timer",
+      "info": "Achtung! Nur 1x pro Leiste auswählen."
+        },
+        {
+          "type": "header",
+          "content": "4. Spalte"
+        },
+        {
+          "type": "text",
+          "id": "text_4",
+          "label": "Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_4",
+          "label": "Icon"
+        },
+        {
+          "type": "range",
+          "id": "img_size_4",
+          "min": 16,
+          "max": 100,
+          "step": 2,
+          "default": 20,
+          "unit": "px",
+          "label": "Size"
+        },
+        {
+          "type": "url",
+          "id": "link_4",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mobile_4",
+          "default": false,
+          "label": "Hide Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "align_absolute_4",
+          "default": false,
+          "label": "Align Absolute",
+      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+        },
+        {
+          "type": "checkbox",
+          "id": "timer_4",
+          "default": false,
+          "label": "24 Stunden Timer",
+      "info": "Achtung! Nur 1x pro Leiste auswählen."
+        },
+        {
+          "type": "header",
+          "content": "Allgemein"
         },
         {
           "type": "select",
@@ -86,9 +497,125 @@
           "label": "t:sections.all.colors.label"
         },
         {
+          "type": "color_background",
+          "id": "bg_color_override",
+          "label": "Hintergrundfarbe überschreiben"
+        },
+        {
           "type": "url",
           "id": "link",
           "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+        },
+        {
+          "type": "header",
+          "content": "Ausblendoptionen"
+        },
+        {
+          "type": "checkbox",
+          "id": "removeable_cross",
+          "default": false,
+          "label": "Ausblendbar mit X"
+        },
+        {
+          "type": "color",
+          "id": "removeable_cross_hex",
+          "label": "Farbe",
+      "default": "#FF0000"
+        },
+        {
+          "type": "range",
+          "id": "removeable_cross_size",
+          "min": 14,
+          "max": 30,
+          "step": 2,
+          "default": 20,
+          "unit": "px",
+          "label": "Größe"
+        },
+        {
+          "type": "header",
+          "content": "Iconstack"
+        },
+        {
+          "type": "select",
+          "id": "iconstack_position",
+          "options": [
+            {
+              "value": "inaktiv",
+              "label": "Inaktiv"
+            },{
+              "value": "left",
+              "label": "Position 1"
+            },
+            {
+              "value": "left-mid",
+              "label": "Position 2"
+            },
+            {
+              "value": "right-mid",
+              "label": "Position 3"
+            },
+            {
+              "value": "right",
+              "label": "Position 4"
+            }
+          ],
+          "default": "inaktiv",
+          "label": "Position in der Leiste"
+        },
+        {
+          "type": "image_picker",
+          "id": "iconstack_1",
+          "label": "Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "iconstack_2",
+          "label": "Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "iconstack_3",
+          "label": "Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "iconstack_4",
+          "label": "Icon"
+        },
+        {
+          "type": "range",
+          "id": "iconstack_size",
+          "min": 20,
+          "max": 80,
+          "step": 2,
+          "default": 20,
+          "unit": "px",
+          "label": "Icongröße"
+        },
+        {
+          "type": "header",
+          "content": "Padding"
+        },
+        {
+          "type": "range",
+          "id": "desktop_padding",
+          "min": 0,
+          "max": 20,
+          "step": 2,
+          "default": 0,
+          "unit": "px",
+          "label": "Desktop Padding Top / Bottom"
+        },
+        {
+          "type": "range",
+          "id": "mobile_padding",
+          "min": 0,
+          "max": 20,
+          "step": 2,
+          "default": 0,
+          "unit": "px",
+          "label": "Mobile Padding Top / Bottom"
         }
       ]
     }
