@@ -11,7 +11,8 @@
     align-content: center;
     justify-content: center;
     align-items: center;
-  font-size: {{ section.settings.text_font_size }}rem;
+    text-align: center;
+    font-size: {{ section.settings.text_font_size }}rem;
   }
   .announcement_img--icon {
     margin-right: 5px;
@@ -25,14 +26,14 @@
     right: 10px;
     font-size: 1.2em;
     cursor: pointer;
-  z-index: 1;
+    z-index: 1;
   }
 
   @media only screen and (min-width: 750px) {
     .align_absolute {
       position: absolute;
     }
-  .align_absolute .align_absolute {
+    .align_absolute .align_absolute {
       position: relative;
     }
   }
@@ -58,17 +59,17 @@
     {%- when 'announcement' -%}
     {%- style -%}
     {%- if block.settings.bg_color_override != blank -%}
-          .announcement-bar.custom-{{ forloop.index }} {
-            background: {{ block.settings.bg_color_override }};
-      padding: {{ block.settings.desktop_padding }}px;
-          }
+      .announcement-bar.custom-{{ forloop.index }} {
+        background: {{ block.settings.bg_color_override }};
+        padding: {{ block.settings.desktop_padding }}px;
+      }
     {%- endif -%}
     {%- if block.settings.mobile_padding > 0 -%}
-          @media only screen and (max-width: 749px) {
-            .announcement-bar.custom-{{ forloop.index }} {
-              padding: {{ block.settings.mobile_padding }}px;
-            }
-          }
+      @media only screen and (max-width: 749px) {
+        .announcement-bar.custom-{{ forloop.index }} {
+          padding: {{ block.settings.mobile_padding }}px;
+        }
+      }
     {%- endif -%}
     {%- endstyle -%}
       <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient custom-{{ forloop.index }}" data-barindex="announcement-index-{{ forloop.index }}" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
@@ -238,20 +239,20 @@
     {
       "type": "range",
       "id": "text_font_size",
-    "min": 1,
+      "min": 1,
       "max": 3,
       "step": 0.1,
-    "unit": "rem",
+      "unit": "rem",
       "label": "Font Size [desktop]",
       "default": 1.2
     },
   {
       "type": "range",
       "id": "text_font_size_mobile",
-    "min": 1,
+      "min": 1,
       "max": 3,
       "step": 0.1,
-    "unit": "rem",
+      "unit": "rem",
       "label": "Font Size [mobile]",
       "default": 1.1
     },
@@ -308,14 +309,14 @@
           "id": "align_absolute_1",
           "default": false,
           "label": "Align Absolute",
-      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+          "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
         },
         {
           "type": "checkbox",
           "id": "timer_1",
           "default": false,
           "label": "24 Stunden Timer",
-      "info": "Achtung! Nur 1x pro Leiste auswählen."
+          "info": "Achtung! Nur 1x pro Leiste auswählen."
         },
         {
           "type": "header",
@@ -357,14 +358,14 @@
           "id": "align_absolute_2",
           "default": false,
           "label": "Align Absolute",
-      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+          "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
         },
         {
           "type": "checkbox",
           "id": "timer_2",
           "default": false,
           "label": "24 Stunden Timer",
-      "info": "Achtung! Nur 1x pro Leiste auswählen."
+          "info": "Achtung! Nur 1x pro Leiste auswählen."
         },
         {
           "type": "header",
@@ -406,14 +407,14 @@
           "id": "align_absolute_3",
           "default": false,
           "label": "Align Absolute",
-      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+          "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
         },
         {
           "type": "checkbox",
           "id": "timer_3",
           "default": false,
           "label": "24 Stunden Timer",
-      "info": "Achtung! Nur 1x pro Leiste auswählen."
+          "info": "Achtung! Nur 1x pro Leiste auswählen."
         },
         {
           "type": "header",
@@ -455,14 +456,14 @@
           "id": "align_absolute_4",
           "default": false,
           "label": "Align Absolute",
-      "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
+          "info": "Achtung! Nur 1x pro Leiste auswählen und nur bei 3 Spalten sinnvoll."
         },
         {
           "type": "checkbox",
           "id": "timer_4",
           "default": false,
           "label": "24 Stunden Timer",
-      "info": "Achtung! Nur 1x pro Leiste auswählen."
+          "info": "Achtung! Nur 1x pro Leiste auswählen."
         },
         {
           "type": "header",
@@ -520,7 +521,7 @@
           "type": "color",
           "id": "removeable_cross_hex",
           "label": "Farbe",
-      "default": "#FF0000"
+          "default": "#FF0000"
         },
         {
           "type": "range",
